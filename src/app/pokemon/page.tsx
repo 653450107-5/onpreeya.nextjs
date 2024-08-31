@@ -81,7 +81,7 @@ export default function Page() {
     <div className="main">
       <header className="header-home">
         <div className="text">
-          <img src="/pokemon_logo.png" alt="logo" />
+          <h1>Pokemon</h1>
           <div className="logo">
             <img src="/pokeball.svg" alt="pokeball" />
           </div>
