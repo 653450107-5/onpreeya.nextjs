@@ -41,26 +41,43 @@ const statAbbreviations: { [key: string]: string } = {
 export default function PokemonDetailPage() {
   const params = useParams<{ name: string }>(); // Get Pokémon name from URL
   const [pokemonDetails, setPokemonDetails] = useState<PokemonDetails | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
   const router = useRouter();
 
   useEffect(() => {
-    if (params.name) {
-      const fetchPokemonDetails = async () => {
-        try {
-          const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${params.name}`);
-          const data = await response.json();
-          setPokemonDetails(data);
-        } catch (error) {
-          console.error("Error fetching Pokémon details:", error);
+    const fetchPokemonDetails = async () => {
+      setLoading(true);
+      setError(null);
+      try {
+        const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${params.name}`);
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
         }
-      };
+        const data = await response.json();
+        setPokemonDetails(data);
+      } catch (error: any) {
+        setError(error.message);
+      } finally {
+        setLoading(false);
+      }
+    };
 
+    if (params.name) {
       fetchPokemonDetails();
     }
   }, [params.name]);
 
-  if (!pokemonDetails) {
+  if (loading) {
     return <p>Loading...</p>;
+  }
+
+  if (error) {
+    return <p>Error: {error}</p>;
+  }
+
+  if (!pokemonDetails) {
+    return <p>No Pokémon data available</p>;
   }
 
   const renderStatBar = (statName: string, baseStat: number) => {
@@ -103,7 +120,7 @@ export default function PokemonDetailPage() {
           <p>{pokemonDetails.weight} hectograms</p>
         </div>
         <h2>Abilities</h2>
-        <ul>
+        <ul className="abilities-list">
           {pokemonDetails.abilities.map((ability, index) => (
             <li key={index}>{ability.ability.name}</li>
           ))}
