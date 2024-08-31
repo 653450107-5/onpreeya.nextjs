@@ -1,6 +1,6 @@
-"use client";
-import { useParams, useRouter } from "next/navigation";
-import React, { useEffect, useState } from "react";
+// app/pokemon/[name]/page.tsx
+import { useParams, useRouter } from 'next/navigation';
+import React, { useEffect, useState } from 'react';
 import './details.css';
 
 interface PokemonDetails {
@@ -9,8 +9,8 @@ interface PokemonDetails {
     front_default: string;
     other: {
       'official-artwork': {
-        front_default: string; // High-resolution image URL
-      }
+        front_default: string;
+      };
     };
   };
   height: number;
@@ -39,51 +39,34 @@ const statAbbreviations: { [key: string]: string } = {
 };
 
 export default function PokemonDetailPage() {
-  const params = useParams<{ name: string }>(); // Get Pokémon name from URL
+  const params = useParams<{ name: string }>();
   const [pokemonDetails, setPokemonDetails] = useState<PokemonDetails | null>(null);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
   const router = useRouter();
 
   useEffect(() => {
-    const fetchPokemonDetails = async () => {
-      setLoading(true);
-      setError(null);
-      try {
-        const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${params.name}`);
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        const data = await response.json();
-        setPokemonDetails(data);
-      } catch (error: any) {
-        setError(error.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-
     if (params.name) {
+      const fetchPokemonDetails = async () => {
+        try {
+          const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${params.name}`);
+          const data = await response.json();
+          setPokemonDetails(data);
+        } catch (error) {
+          console.error("Error fetching Pokémon details:", error);
+        }
+      };
+
       fetchPokemonDetails();
     }
   }, [params.name]);
 
-  if (loading) {
+  if (!pokemonDetails) {
     return <p>Loading...</p>;
   }
 
-  if (error) {
-    return <p>Error: {error}</p>;
-  }
-
-  if (!pokemonDetails) {
-    return <p>No Pokémon data available</p>;
-  }
-
   const renderStatBar = (statName: string, baseStat: number) => {
-    const maxStat = 255; 
+    const maxStat = 255;
     const percentage = (baseStat / maxStat) * 100;
-    const shortStatName = statAbbreviations[statName] || statName; // Get abbreviated name
+    const shortStatName = statAbbreviations[statName] || statName;
 
     return (
       <div className="stat-bar">
@@ -93,10 +76,7 @@ export default function PokemonDetailPage() {
           <span className="stat-value">{baseStat}</span>
         </div>
         <div className="bar-container">
-          <div
-            className="stat-bar-fill"
-            style={{ width: `${percentage}%` }}
-          />
+          <div className="stat-bar-fill" style={{ width: `${percentage}%` }} />
         </div>
       </div>
     );
@@ -120,7 +100,7 @@ export default function PokemonDetailPage() {
           <p>{pokemonDetails.weight} hectograms</p>
         </div>
         <h2>Abilities</h2>
-        <ul className="abilities-list">
+        <ul>
           {pokemonDetails.abilities.map((ability, index) => (
             <li key={index}>{ability.ability.name}</li>
           ))}
@@ -137,4 +117,17 @@ export default function PokemonDetailPage() {
       <button onClick={() => router.back()} className="back-button">Go Back</button>
     </div>
   );
+}
+
+export async function generateStaticParams() {
+  const res = await fetch('https://pokeapi.co/api/v2/pokemon?limit=100'); // Fetch a list of Pokémon
+  const data = await res.json();
+  const paths = data.results.map((pokemon: any) => ({
+    params: { name: pokemon.name },
+  }));
+
+  return {
+    paths,
+    fallback: 'blocking', // or 'true' or 'false' depending on your needs
+  };
 }
