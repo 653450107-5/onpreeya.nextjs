@@ -1,0 +1,86 @@
+@import url('https://fonts.cdnfonts.com/css/pokemon-solid');
+@import url('https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&display=swap');
+.text h1 {
+  color: rgb(255, 234, 0);
+  font-family: 'Pokemon Solid', sans-serif;
+  font-size: 42px;
+  text-shadow: -5px 0 rgb(0, 84, 210), 0 3px rgb(0, 84, 210), 3px 0 rgb(0, 84, 210), 0 -5px rgb(0, 84, 210);
+}
+.main {
+  background-color: rgb(255, 0, 0);
+  text-align: center;
+}
+.pokemon-list {
+  list-style-type: none;
+  padding: 50px;
+  margin: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  border-radius: 25px;
+  background-color: rgb(255, 255, 255);
+}
+
+.list-item {
+  box-shadow: var(--drop-shadow);
+  background-color: var(--grayscale-white);
+  width: 120px;
+  height: 120px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  padding: 30px;
+  transition: transform 0.3s, box-shadow 0.3s;
+  border-radius: 10px;
+  box-shadow: 5px 5px 10px rgba(0,0,0,.2);
+  background-color: rgb(255, 255, 255);
+  border: 1px solid black;
+  font-family: "Pixelify Sans", sans-serif;
+}
+.list-item:hover {
+  transform: scale(1.05);
+  box-shadow: var(--drop-shadow-hover);
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.538);
+}
+
+.pokemon-name {
+  font-size: var(--body1-font-size);
+  color: var(--grayscale-dark);
+  text-transform: capitalize;
+}
+
+.list-item-link {
+  text-decoration: none;
+  color: inherit;
+}
+.pokemon-image {
+  width: 80px; /* Adjust width as needed */
+  height: 80px; /* Adjust height as needed */
+  border-radius: 5px;
+  margin-bottom: 5px; /* Space between image and name */
+}
+@media (max-width: 768px) {
+  .list-item {
+    width: 100px;
+    height: 160px;
+  }
+
+  .pokemon-image {
+    width: 60px;
+    height: 60px;
+  }
+
+  .pokemon-name {
+    font-size: 0.9rem;
+  }
+}
+button {
+  font-size: 20px;
+  background-color: rgb(255, 255, 255);
+  border-radius: 25px;
+  font-family: "Pixelify Sans", sans-serif;
+}
+.container p{
+  font-family: "Pixelify Sans", sans-serif;
+  color: rgb(255, 255, 255);
+}

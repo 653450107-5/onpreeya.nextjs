@@ -1,0 +1,140 @@
+  * {
+    font-family: "Comfortaa", sans-serif;
+    box-sizing: border-box; /* Ensures padding and borders are included in the element's total width and height */
+  }
+  
+  body {
+    margin: 0; /* Remove default body margin */
+  }
+  
+  .about-container {
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 100%; /* Ensure it takes full width on smaller screens */
+  }
+  
+  .profile-image img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 20px;
+  }
+  
+  .profile-info p {
+    font-size: 15px;
+    margin: 10px 0;
+  }
+  
+  h2 {
+    margin-top: 30px;
+    font-size: 24px;
+    color: #333;
+  }
+  
+  .skill-bar {
+    margin: 20px 0;
+  }
+  
+  .skill-bar p {
+    font-size: 16px;
+    margin-bottom: 5px;
+  }
+  
+  .bar {
+    background-color: #e0e0e0;
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+    height: 10px; /* Reduce height */
+  }
+  
+  .bar-fill {
+    height: 100%;
+    background-color: #5281cc;
+    text-align: right;
+    padding-right: 5px;
+    line-height: 10px;
+    font-size: 7px;
+    color: white;
+  }
+  
+  .contact-links a {
+    display: inline-block;
+    margin: 0 15px;
+    color: #333;
+    transition: color 0.3s;
+  }
+  
+  .contact-links a:hover {
+    color: #007bff;
+  }
+  
+  /* Responsive styles */
+  @media (max-width: 768px) {
+    .profile-image img {
+      width: 120px;
+      height: 120px;
+    }
+  
+    .profile-info p {
+      font-size: 14px;
+    }
+  
+    h2 {
+      font-size: 20px;
+    }
+  
+    .skill-bar p {
+      font-size: 14px;
+    }
+  
+    .bar {
+      height: 8px;
+    }
+  
+    .bar-fill {
+      font-size: 6px;
+    }
+  
+    .contact-links a {
+      margin: 0 10px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .profile-image img {
+      width: 100px;
+      height: 100px;
+    }
+  
+    .profile-info p {
+      font-size: 12px;
+    }
+  
+    h2 {
+      font-size: 18px;
+    }
+  
+    .skill-bar p {
+      font-size: 12px;
+    }
+  
+    .bar {
+      height: 6px;
+    }
+  
+    .bar-fill {
+      font-size: 5px;
+    }
+  
+    .contact-links a {
+      margin: 0 5px;
+    }
+  }
+  
